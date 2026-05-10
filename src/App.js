@@ -5,7 +5,7 @@ import { useState, useEffect, useCallback } from "react";
 import { initializeApp } from "firebase/app";
 import {
   getFirestore, collection, onSnapshot,
-  addDoc, deleteDoc, doc, setDoc, getDoc,
+  addDoc, deleteDoc, doc, setDoc,
 } from "firebase/firestore";
 
 /* ──────────────────────────────────────
