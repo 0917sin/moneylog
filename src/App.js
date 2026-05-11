@@ -723,7 +723,6 @@ function BudgetList({monthExp,monthInc,deleteRecord}){
 function BudgetChart({monthExp,grandTotal,records,selYear,selMonth}){
   const catData=CATEGORIES.map(c=>({...c,total:monthExp.filter(r=>r.category===c.id).reduce((s,r)=>s+r.amount,0)})).filter(c=>c.total>0).sort((a,b)=>b.total-a.total);
   const maxCat=Math.max(...catData.map(c=>c.total),1);
-  const userData=USERS.map(u=>({...u,total:monthExp.filter(r=>r.user===u.id).reduce((s,r)=>s+r.amount,0)}));
   const trendMonths=[];
   for(let i=5;i>=0;i--){let y=selYear,m=selMonth-i;while(m<=0){m+=12;y--;}trendMonths.push({label:`${m}월`,key:`${y}-${String(m).padStart(2,"0")}`});}
   const trendData=trendMonths.map(t=>({
