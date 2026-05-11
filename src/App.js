@@ -8,14 +8,14 @@ import {
   onSnapshot, addDoc, deleteDoc, setDoc, getDoc
 } from "firebase/firestore";
 
-/* 🔥 Firebase Config — 본인 값으로 교체! */
+/* 🔥 Firebase Config */
 const firebaseConfig = {
-  apiKey:            "여기에_붙여넣기",
-  authDomain:        "여기에_붙여넣기",
-  projectId:         "여기에_붙여넣기",
-  storageBucket:     "여기에_붙여넣기",
-  messagingSenderId: "여기에_붙여넣기",
-  appId:             "여기에_붙여넣기",
+  apiKey:            "AIzaSyDqbBkmW6X_18LNq8P6xPM2d5gSfAftiqg",
+  authDomain:        "moneylog-af38e.firebaseapp.com",
+  projectId:         "moneylog-af38e",
+  storageBucket:     "moneylog-af38e.firebasestorage.app",
+  messagingSenderId: "931609977521",
+  appId:             "1:931609977521:web:fff32bee08ba42027c7890",
 };
 const app = initializeApp(firebaseConfig);
 const db  = getFirestore(app);
@@ -723,7 +723,6 @@ function BudgetList({monthExp,monthInc,deleteRecord}){
 function BudgetChart({monthExp,grandTotal,records,selYear,selMonth}){
   const catData=CATEGORIES.map(c=>({...c,total:monthExp.filter(r=>r.category===c.id).reduce((s,r)=>s+r.amount,0)})).filter(c=>c.total>0).sort((a,b)=>b.total-a.total);
   const maxCat=Math.max(...catData.map(c=>c.total),1);
-  const userData=USERS.map(u=>({...u,total:monthExp.filter(r=>r.user===u.id).reduce((s,r)=>s+r.amount,0)}));
   const trendMonths=[];
   for(let i=5;i>=0;i--){let y=selYear,m=selMonth-i;while(m<=0){m+=12;y--;}trendMonths.push({label:`${m}월`,key:`${y}-${String(m).padStart(2,"0")}`});}
   const trendData=trendMonths.map(t=>({
