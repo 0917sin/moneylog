@@ -2584,8 +2584,8 @@ function CoupleRoomTab({coins,spendCoins,showToast,settings,updateSettings}){
       const inset=Math.floor(W*0.18);
       const innerW=W-inset*2;
       const wallH=Math.floor(H*0.72);
-      const sameCount=cnt=>[...allIds].filter(x=>ITEM_INFO[x]?.cat===cnt).length;
-      const sameIdx=cnt=>[...allIds].filter(x=>ITEM_INFO[x]?.cat===cnt).indexOf(id);
+      const sameCount=cnt=>[...allIds].filter(x=>ITEM_INFO[x]&&ITEM_INFO[x].cat===cnt).length;
+      const sameIdx=cnt=>[...allIds].filter(x=>ITEM_INFO[x]&&ITEM_INFO[x].cat===cnt).indexOf(id);
       if(info.cat==='fur1'){
         const idx=sameIdx('fur1'), cnt=sameCount('fur1');
         const slot=cnt>1?idx/(cnt):0;
@@ -2677,38 +2677,41 @@ function CoupleRoomTab({coins,spendCoins,showToast,settings,updateSettings}){
     const [wallLight,wallDark]=wallColors[house.wall]||wallColors.default;
     const [floorLight,floorDark]=floorColors[house.floor]||floorColors.default;
 
-    // 원근감 있는 방 구조 (이미지 참고)
-    // 1) 왼쪽 벽 (사다리꼴 - 왼쪽이 위로)
+    // 원근감 있는 방 구조
     const wallH=Math.floor(H*0.72); // 벽 높이
     const inset=Math.floor(W*0.18); // 벽 안쪽 들여쓰기 (원근감)
-    // 왼쪽 벽
+
+    // 1) 왼쪽 벽 (캔버스 끝까지 채움)
     ctx.fillStyle=wallDark;
     ctx.beginPath();
     ctx.moveTo(0,0);
     ctx.lineTo(inset,inset*0.7);
     ctx.lineTo(inset,wallH);
-    ctx.lineTo(0,wallH+inset*0.5);
+    ctx.lineTo(0,H);              // 캔버스 바닥 모서리까지
     ctx.closePath();
     ctx.fill();
-    // 오른쪽 벽
+    // 2) 오른쪽 벽
     ctx.fillStyle=wallDark;
     ctx.beginPath();
     ctx.moveTo(W,0);
     ctx.lineTo(W-inset,inset*0.7);
     ctx.lineTo(W-inset,wallH);
-    ctx.lineTo(W,wallH+inset*0.5);
+    ctx.lineTo(W,H);              // 캔버스 바닥 모서리까지
     ctx.closePath();
     ctx.fill();
-    // 뒷벽 (사다리꼴 윗부분)
+    // 3) 뒷벽
+    ctx.fillStyle=wallLight;
+    ctx.fillRect(inset,0,W-inset*2,wallH);
+    // 뒷벽 윗부분 사다리꼴 빈 공간 채우기 (천장 같은 효과)
     ctx.fillStyle=wallLight;
     ctx.beginPath();
-    ctx.moveTo(inset,inset*0.7);
+    ctx.moveTo(inset,0);
+    ctx.lineTo(W-inset,0);
     ctx.lineTo(W-inset,inset*0.7);
-    ctx.lineTo(W-inset,wallH);
-    ctx.lineTo(inset,wallH);
+    ctx.lineTo(inset,inset*0.7);
     ctx.closePath();
     ctx.fill();
-    // 바닥 (앞으로 넓어지는 사다리꼴)
+    // 4) 바닥 (사다리꼴 - 앞으로 넓어지는)
     ctx.fillStyle=floorLight;
     ctx.beginPath();
     ctx.moveTo(inset,wallH);
@@ -2783,45 +2786,67 @@ function CoupleRoomTab({coins,spendCoins,showToast,settings,updateSettings}){
     const allPlacedIds=new Set([...Object.keys(placed),...legacyIds,...owned.filter(id=>ITEM_INFO[id])]);
     const defaultPos=(id,i)=>{
       const info=ITEM_INFO[id];if(!info)return {x:50,y:200};
-      // 새 방 구조: 벽 안쪽(inset=W*0.18) 안에서 배치
       const inset=Math.floor(W*0.18);
       const innerW=W-inset*2; // 안쪽 너비
       const wallH=Math.floor(H*0.72);
-      // 카테고리별로 자동 배치 - 같은 카테고리 가구는 가로로 균등 분산
-      const sameCount=cnt=>[...allPlacedIds].filter(x=>ITEM_INFO[x]?.cat===cnt).length;
-      const sameIdx=cnt=>[...allPlacedIds].filter(x=>ITEM_INFO[x]?.cat===cnt).indexOf(id);
+      const sameCount=cnt=>[...allPlacedIds].filter(x=>ITEM_INFO[x]&&ITEM_INFO[x].cat===cnt).length;
+      const sameIdx=cnt=>[...allPlacedIds].filter(x=>ITEM_INFO[x]&&ITEM_INFO[x].cat===cnt).indexOf(id);
+      // 가구 크기 (밖으로 안 나가게 마진 고려)
+      const itemW=info.pixel&&FUR_SIZE[info.key]?FUR_SIZE[info.key].w*3:info.size;
+      let x,y;
       if(info.cat==='fur1'){
         // 큰 가구는 왼쪽~중앙 분포
         const idx=sameIdx('fur1'), cnt=sameCount('fur1');
-        const slot=cnt>1?idx/(cnt):0;
-        return {x:inset+15+Math.floor(slot*(innerW*0.5)),y:wallH+35};
-      }
-      if(info.cat==='fur2'){
-        // 가구2는 중앙~오른쪽 분포
+        const slot=cnt>1?idx/Math.max(1,cnt-1):0;
+        x=Math.floor(inset+15+slot*(innerW*0.45));
+        y=wallH+40;
+      } else if(info.cat==='fur2'){
+        // 가구2는 오른쪽~중앙 분포
         const idx=sameIdx('fur2'), cnt=sameCount('fur2');
-        const slot=cnt>1?idx/(cnt):0;
-        return {x:Math.floor(W-inset-70-slot*(innerW*0.4)),y:wallH+35};
-      }
-      if(info.cat==='deco'){
-        // 데코는 뒷벽 근처 위쪽에 가로로 분산
+        const slot=cnt>1?idx/Math.max(1,cnt-1):0;
+        x=Math.floor(W-inset-itemW-15-slot*(innerW*0.35));
+        y=wallH+40;
+      } else if(info.cat==='deco'){
+        // 데코는 뒷벽 근처 위쪽
         const idx=sameIdx('deco'), cnt=sameCount('deco');
-        const slot=cnt>1?idx/(cnt-1):0.5;
-        return {x:Math.floor(inset+20+slot*(innerW-50)),y:wallH-10};
-      }
-      if(info.cat==='pet'){
-        // 펫은 앞쪽 바닥에 가로로 분산
+        const slot=cnt>1?idx/Math.max(1,cnt-1):0.5;
+        x=Math.floor(inset+15+slot*(innerW-40));
+        y=wallH-15;
+      } else if(info.cat==='pet'){
+        // 펫은 앞쪽 바닥
         const idx=sameIdx('pet'), cnt=sameCount('pet');
-        const slot=cnt>1?idx/(cnt-1):0.5;
-        return {x:Math.floor(40+slot*(W-120)),y:H-20};
+        const slot=cnt>1?idx/Math.max(1,cnt-1):0.5;
+        x=Math.floor(50+slot*(W-150));
+        y=H-25;
+      } else {
+        x=50;y=200;
       }
-      return {x:50,y:200};
+      // 안전망: 가구가 벽 밖이나 바닥 밖으로 나가지 않게
+      const minX=10, maxX=W-Math.max(itemW+10,30);
+      const minY=20, maxY=H-10;
+      return {x:Math.max(minX,Math.min(maxX,x)), y:Math.max(minY,Math.min(maxY,y))};
     };
-    // y좌표 기준으로 정렬 → 뒤쪽 가구가 먼저 그려져서 자연스러움
+    // y좌표 기준으로 정렬: 뒤쪽이 먼저 → 앞쪽이 나중. 펫은 항상 앞쪽으로
     const placedList=[...allPlacedIds].map((id,i)=>{
       const info=ITEM_INFO[id];if(!info)return null;
       const p=placed[id]||defaultPos(id,i);
-      return {id,info,x:p.x,y:p.y};
-    }).filter(Boolean).sort((a,b)=>a.y-b.y);
+      // 카테고리별 z-order: deco=0(가장 뒤), fur1/fur2=1, pet=2(가장 앞)
+      const z=info.cat==='deco'?0:info.cat==='pet'?2:1;
+      return {id,info,x:p.x,y:p.y,z};
+    }).filter(Boolean).sort((a,b)=>(a.z-b.z)||(a.y-b.y));
+
+    // 가구는 방 영역 안에만 그려지게 클리핑 (벽 밖에 안 나가도록)
+    ctx.save();
+    ctx.beginPath();
+    // 방 내부 폴리곤 (윗벽 + 양옆 벽 + 바닥)
+    ctx.moveTo(inset,0);
+    ctx.lineTo(W-inset,0);
+    ctx.lineTo(W-inset,wallH);
+    ctx.lineTo(W,H);
+    ctx.lineTo(0,H);
+    ctx.lineTo(inset,wallH);
+    ctx.closePath();
+    ctx.clip();
     // 편집모드일 때 가구 주변에 점선 박스
     const drawBox=(p,sz)=>{ctx.strokeStyle='rgba(255,215,0,0.7)';ctx.setLineDash([3,2]);ctx.lineWidth=1;ctx.strokeRect(p.x-2,p.y-sz,sz+4,sz+4);ctx.setLineDash([]);};
     // 가구 그리기: 픽셀아트 가구가 있으면 그걸 쓰고, 없으면 emoji + 밝은 배경
@@ -2869,6 +2894,7 @@ function CoupleRoomTab({coins,spendCoins,showToast,settings,updateSettings}){
         if(editMode)drawBox({x:it.x,y:it.y},it.info.size+4);
       }
     });
+    ctx.restore(); // 클리핑 해제 (캐릭터는 클리핑 영역 밖에도 그려질 수 있게)
     const sc=4,baseGroundY=Math.floor(H*0.85/sc)-26;  // sc=4로 키움, 바닥에 닿게
     const bbC=myRole==='me'?myChar:partnerChar;
     const okC=myRole==='me'?partnerChar:myChar;
