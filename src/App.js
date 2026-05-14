@@ -1660,12 +1660,32 @@ function DrawBbang(ctx,char={},ox=0,oy=0,sc=5){
   const btmC=char.bottom==='skirt'?PP.skirt:char.bottom==='shorts'?PP.shorts:char.bottom==='jeans'?PP.jeans:char.bottom==='slacks'?'#37474F':char.bottom==='cargo'?'#7C7059':char.bottom==='training'?'#444444':PP.black;
   const shC=char.shoes==='heels'?PP.heels:char.shoes==='boots'?PP.boots:char.shoes==='sneakers'?PP.sneakers:char.shoes==='sandals'?'#A68B5B':PP.black;
 
-  // 이펙트 (캐릭터 주변)
-  if(char.effect==='hearts'){p(-2,2,2,2,PP.heart);p(16,4,2,2,PP.heart);p(-1,8,1,1,PP.heart);}
-  if(char.effect==='stars'){p(-2,3,2,2,PP.star);p(16,2,2,2,PP.star);p(-1,9,1,1,PP.star);}
-  if(char.effect==='sparkles'){p(-1,1,1,2,'#fff');p(16,2,1,2,'#fff');p(-2,7,1,1,'#fff');p(16,11,1,1,'#fff');}
-  if(char.effect==='fire'){p(-1,0,1,3,'#FF6B35');p(16,1,1,3,'#FF6B35');}
-  if(char.effect==='snow'){p(-1,4,1,1,'#fff');p(17,7,1,1,'#fff');p(-2,11,1,1,'#fff');}
+  // 이펙트 (캐릭터 주변) - 더 크고 잘 보이게
+  if(char.effect==='hearts'){
+    p(-3,1,2,2,PP.heart);p(16,3,2,2,PP.heart);p(-2,7,2,2,PP.heart);p(17,10,1,1,PP.heart);
+  }
+  if(char.effect==='stars'){
+    p(-3,2,2,2,PP.star);p(16,1,2,2,PP.star);p(-2,8,2,2,PP.star);p(17,12,1,2,PP.star);
+  }
+  if(char.effect==='sparkles'){
+    p(-2,0,1,2,'#fff');p(16,1,1,2,'#fff');p(-3,6,1,1,'#fff');p(17,9,1,1,'#fff');p(-2,12,1,2,'#fff');
+  }
+  if(char.effect==='fire'){
+    p(-2,-1,2,3,'#FF6B35');p(16,0,2,3,'#FF6B35');p(-1,2,1,2,'#FFD700');p(17,3,1,2,'#FFD700');
+  }
+  if(char.effect==='rainbow'){
+    p(-3,5,1,2,'#FF6B6B');p(-3,7,1,2,'#FFA94D');p(-3,9,1,2,'#FFD43B');
+    p(17,5,1,2,'#FF6B6B');p(17,7,1,2,'#FFA94D');p(17,9,1,2,'#FFD43B');
+  }
+  if(char.effect==='lightning'){
+    p(-2,2,1,3,'#FFD700');p(-3,4,1,2,'#FFD700');p(17,2,1,3,'#FFD700');p(16,4,1,2,'#FFD700');
+  }
+  if(char.effect==='snow'){
+    p(-2,3,1,1,'#fff');p(17,6,1,1,'#fff');p(-3,9,1,1,'#fff');p(16,12,1,1,'#fff');p(-2,14,1,1,'#fff');
+  }
+  if(char.effect==='petals'){
+    p(-2,3,1,1,'#FFB5BA');p(17,6,1,1,'#FFB5BA');p(-3,9,1,1,'#FFB5BA');p(16,12,1,1,'#FFB5BA');
+  }
 
   // 신발 (그림자 살짝)
   p(2,25,1,1,'#000');p(11,25,1,1,'#000');
@@ -1778,12 +1798,32 @@ function DrawOkji(ctx,char={},ox=0,oy=0,sc=5){
   const btmC=char.bottom==='skirt'?PP.skirt:char.bottom==='shorts'?PP.shorts:char.bottom==='jeans'?PP.jeans:char.bottom==='slacks'?'#37474F':char.bottom==='cargo'?'#7C7059':char.bottom==='minishirt'?'#E91E63':char.bottom==='long'?'#9C27B0':char.bottom==='training'?'#444444':PP.skirt;
   const shC=char.shoes==='heels'?PP.heels:char.shoes==='boots'?PP.boots:char.shoes==='sneakers'?PP.sneakers:char.shoes==='sandals'?'#A68B5B':PP.heels;
 
-  // 이펙트
-  if(char.effect==='hearts'){p(-2,2,2,2,PP.heart);p(16,4,2,2,PP.heart);p(-1,8,1,1,PP.heart);}
-  if(char.effect==='stars'){p(-2,3,2,2,PP.star);p(16,2,2,2,PP.star);p(-1,9,1,1,PP.star);}
-  if(char.effect==='sparkles'){p(-1,1,1,2,'#fff');p(16,2,1,2,'#fff');p(-2,7,1,1,'#fff');p(16,11,1,1,'#fff');}
-  if(char.effect==='fire'){p(-1,0,1,3,'#FF6B35');p(16,1,1,3,'#FF6B35');}
-  if(char.effect==='petals'){p(-1,3,1,1,'#FFB5BA');p(16,6,1,1,'#FFB5BA');p(-2,10,1,1,'#FFB5BA');}
+  // 이펙트 - 더 크고 잘 보이게
+  if(char.effect==='hearts'){
+    p(-3,1,2,2,PP.heart);p(16,3,2,2,PP.heart);p(-2,7,2,2,PP.heart);p(17,10,1,1,PP.heart);
+  }
+  if(char.effect==='stars'){
+    p(-3,2,2,2,PP.star);p(16,1,2,2,PP.star);p(-2,8,2,2,PP.star);p(17,12,1,2,PP.star);
+  }
+  if(char.effect==='sparkles'){
+    p(-2,0,1,2,'#fff');p(16,1,1,2,'#fff');p(-3,6,1,1,'#fff');p(17,9,1,1,'#fff');p(-2,12,1,2,'#fff');
+  }
+  if(char.effect==='fire'){
+    p(-2,-1,2,3,'#FF6B35');p(16,0,2,3,'#FF6B35');p(-1,2,1,2,'#FFD700');p(17,3,1,2,'#FFD700');
+  }
+  if(char.effect==='rainbow'){
+    p(-3,5,1,2,'#FF6B6B');p(-3,7,1,2,'#FFA94D');p(-3,9,1,2,'#FFD43B');
+    p(17,5,1,2,'#FF6B6B');p(17,7,1,2,'#FFA94D');p(17,9,1,2,'#FFD43B');
+  }
+  if(char.effect==='lightning'){
+    p(-2,2,1,3,'#FFD700');p(-3,4,1,2,'#FFD700');p(17,2,1,3,'#FFD700');p(16,4,1,2,'#FFD700');
+  }
+  if(char.effect==='snow'){
+    p(-2,3,1,1,'#fff');p(17,6,1,1,'#fff');p(-3,9,1,1,'#fff');p(16,12,1,1,'#fff');p(-2,14,1,1,'#fff');
+  }
+  if(char.effect==='petals'){
+    p(-2,3,1,1,'#FFB5BA');p(17,6,1,1,'#FFB5BA');p(-3,9,1,1,'#FFB5BA');p(16,12,1,1,'#FFB5BA');
+  }
 
   // 신발
   p(2,25,1,1,'#000');p(11,25,1,1,'#000');
@@ -2541,12 +2581,32 @@ function CoupleRoomTab({coins,spendCoins,showToast,settings,updateSettings}){
     const allIds=new Set([...Object.keys(placed),...legacyIds,...owned.filter(id=>ITEM_INFO[id])]);
     const defaultPos=(id,i)=>{
       const info=ITEM_INFO[id];if(!info)return {x:50,y:200};
-      const off=i*20;
-      if(info.cat==='fur1')return {x:20+off,y:Math.floor(H*0.72)};
-      if(info.cat==='fur2')return {x:W-60-off,y:Math.floor(H*0.72)};
-      if(info.cat==='deco')return {x:W/2-12+off,y:Math.floor(H*0.66)};
-      if(info.cat==='pet')return {x:W/2-12-off,y:Math.floor(H*0.92)};
-      return {x:50+off,y:200};
+      const inset=Math.floor(W*0.18);
+      const innerW=W-inset*2;
+      const wallH=Math.floor(H*0.72);
+      const sameCount=cnt=>[...allIds].filter(x=>ITEM_INFO[x]?.cat===cnt).length;
+      const sameIdx=cnt=>[...allIds].filter(x=>ITEM_INFO[x]?.cat===cnt).indexOf(id);
+      if(info.cat==='fur1'){
+        const idx=sameIdx('fur1'), cnt=sameCount('fur1');
+        const slot=cnt>1?idx/(cnt):0;
+        return {x:inset+15+Math.floor(slot*(innerW*0.5)),y:wallH+35};
+      }
+      if(info.cat==='fur2'){
+        const idx=sameIdx('fur2'), cnt=sameCount('fur2');
+        const slot=cnt>1?idx/(cnt):0;
+        return {x:Math.floor(W-inset-70-slot*(innerW*0.4)),y:wallH+35};
+      }
+      if(info.cat==='deco'){
+        const idx=sameIdx('deco'), cnt=sameCount('deco');
+        const slot=cnt>1?idx/(cnt-1):0.5;
+        return {x:Math.floor(inset+20+slot*(innerW-50)),y:wallH-10};
+      }
+      if(info.cat==='pet'){
+        const idx=sameIdx('pet'), cnt=sameCount('pet');
+        const slot=cnt>1?idx/(cnt-1):0.5;
+        return {x:Math.floor(40+slot*(W-120)),y:H-20};
+      }
+      return {x:50,y:200};
     };
     // 위에 그려진 것부터 (역순) 체크
     const list=[...allIds].map((id,i)=>{
@@ -2723,13 +2783,38 @@ function CoupleRoomTab({coins,spendCoins,showToast,settings,updateSettings}){
     const allPlacedIds=new Set([...Object.keys(placed),...legacyIds,...owned.filter(id=>ITEM_INFO[id])]);
     const defaultPos=(id,i)=>{
       const info=ITEM_INFO[id];if(!info)return {x:50,y:200};
-      // 카테고리별 기본 위치 (겹치지 않게 살짝 오프셋)
-      const off=i*20;
-      if(info.cat==='fur1')return {x:20+off,y:Math.floor(H*0.72)};
-      if(info.cat==='fur2')return {x:W-60-off,y:Math.floor(H*0.72)};
-      if(info.cat==='deco')return {x:W/2-12+off,y:Math.floor(H*0.66)};
-      if(info.cat==='pet')return {x:W/2-12-off,y:Math.floor(H*0.92)};
-      return {x:50+off,y:200};
+      // 새 방 구조: 벽 안쪽(inset=W*0.18) 안에서 배치
+      const inset=Math.floor(W*0.18);
+      const innerW=W-inset*2; // 안쪽 너비
+      const wallH=Math.floor(H*0.72);
+      // 카테고리별로 자동 배치 - 같은 카테고리 가구는 가로로 균등 분산
+      const sameCount=cnt=>[...allPlacedIds].filter(x=>ITEM_INFO[x]?.cat===cnt).length;
+      const sameIdx=cnt=>[...allPlacedIds].filter(x=>ITEM_INFO[x]?.cat===cnt).indexOf(id);
+      if(info.cat==='fur1'){
+        // 큰 가구는 왼쪽~중앙 분포
+        const idx=sameIdx('fur1'), cnt=sameCount('fur1');
+        const slot=cnt>1?idx/(cnt):0;
+        return {x:inset+15+Math.floor(slot*(innerW*0.5)),y:wallH+35};
+      }
+      if(info.cat==='fur2'){
+        // 가구2는 중앙~오른쪽 분포
+        const idx=sameIdx('fur2'), cnt=sameCount('fur2');
+        const slot=cnt>1?idx/(cnt):0;
+        return {x:Math.floor(W-inset-70-slot*(innerW*0.4)),y:wallH+35};
+      }
+      if(info.cat==='deco'){
+        // 데코는 뒷벽 근처 위쪽에 가로로 분산
+        const idx=sameIdx('deco'), cnt=sameCount('deco');
+        const slot=cnt>1?idx/(cnt-1):0.5;
+        return {x:Math.floor(inset+20+slot*(innerW-50)),y:wallH-10};
+      }
+      if(info.cat==='pet'){
+        // 펫은 앞쪽 바닥에 가로로 분산
+        const idx=sameIdx('pet'), cnt=sameCount('pet');
+        const slot=cnt>1?idx/(cnt-1):0.5;
+        return {x:Math.floor(40+slot*(W-120)),y:H-20};
+      }
+      return {x:50,y:200};
     };
     // y좌표 기준으로 정렬 → 뒤쪽 가구가 먼저 그려져서 자연스러움
     const placedList=[...allPlacedIds].map((id,i)=>{
@@ -2784,18 +2869,20 @@ function CoupleRoomTab({coins,spendCoins,showToast,settings,updateSettings}){
         if(editMode)drawBox({x:it.x,y:it.y},it.info.size+4);
       }
     });
-    const sc=3,baseGroundY=Math.floor(H*0.72/sc)-25;
+    const sc=4,baseGroundY=Math.floor(H*0.85/sc)-26;  // sc=4로 키움, 바닥에 닿게
     const bbC=myRole==='me'?myChar:partnerChar;
     const okC=myRole==='me'?partnerChar:myChar;
     // 애니메이션: 숨쉬기 (위아래로 살짝) + 산책 (좌우로)
     const t=animTick;
-    const breathBb=Math.sin(t*0.04)*0.5;  // 빵빵이 숨쉬기
-    const breathOk=Math.sin(t*0.04+1)*0.5; // 옥지 숨쉬기 (위상 다르게)
+    const breathBb=Math.sin(t*0.04)*0.5;
+    const breathOk=Math.sin(t*0.04+1)*0.5;
     const walkBb=animRef.current.bbangWalk.x;
     const walkOk=animRef.current.okjiWalk.x;
-    // 빵빵이 위치 (왼쪽 또는 오른쪽 - myRole에 따라)
-    const bbBaseX=myRole==='me'?8:Math.floor(W/sc)-24;
-    const okBaseX=myRole==='me'?Math.floor(W/sc)-24:8;
+    // sc=4면 W/sc = 120. 캐릭터 16x26. 가운데 = 60
+    // 빵빵이 왼쪽 (40), 옥지 오른쪽 (64) → 둘이 잘 보이게
+    const centerX=Math.floor(W/sc)/2;
+    const bbBaseX=myRole==='me'?Math.floor(centerX-18):Math.floor(centerX+4);
+    const okBaseX=myRole==='me'?Math.floor(centerX+4):Math.floor(centerX-18);
     const bbX=bbBaseX+Math.floor(walkBb/sc);
     const okX=okBaseX+Math.floor(walkOk/sc);
     const bbY=baseGroundY+Math.floor(breathBb);
@@ -2830,7 +2917,7 @@ function CoupleRoomTab({coins,spendCoins,showToast,settings,updateSettings}){
     const loop=(time)=>{
       // 산책 로직 - 각 캐릭터 별도
       const anim=animRef.current;
-      [['bbangWalk',-30,30],['okjiWalk',-30,30]].forEach(([key,minX,maxX])=>{
+      [['bbangWalk',-12,12],['okjiWalk',-12,12]].forEach(([key,minX,maxX])=>{
         const w=anim[key];
         if(w.wait>0){
           w.wait--;
